@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,14 @@ Route::middleware('auth', 'verified')->group(function () {
     // Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
     Route::resource('post', PostController::class);
+  
+    Route::middleware('auth', 'verified')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
 });
 
